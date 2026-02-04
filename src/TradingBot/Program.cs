@@ -10,6 +10,7 @@ var host = Host.CreateDefaultBuilder(args)
     {
         services.AddSingleton<IExchangeAdapter, MockExchangeAdapter>();
         services.AddSingleton<IStrategy, MovingAverageCrossoverStrategy>();
+        services.AddSingleton<IPortfolioTracker, PortfolioTracker>();
         services.AddHostedService<TradingHostedService>();
     })
     .ConfigureLogging(logging => logging.AddConsole())

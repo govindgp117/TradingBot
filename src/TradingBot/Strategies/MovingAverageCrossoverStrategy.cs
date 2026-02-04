@@ -6,14 +6,16 @@ namespace TradingBot.Strategies
     public class MovingAverageCrossoverStrategy : IStrategy
     {
         private readonly IExchangeAdapter _exchange;
+        private readonly IPortfolioTracker _portfolioTracker;
         private readonly List<decimal> _prices = new();
         private readonly int _short = 5;
         private readonly int _long = 20;
         private bool _positionOpen = false;
 
-        public MovingAverageCrossoverStrategy(IExchangeAdapter exchange)
+        public MovingAverageCrossoverStrategy(IExchangeAdapter exchange, IPortfolioTracker portfolioTracker)
         {
             _exchange = exchange;
+            _portfolioTracker = portfolioTracker;
         }
 
         public async Task OnTickAsync(CancellationToken ct = default)
@@ -27,14 +29,16 @@ namespace TradingBot.Strategies
             var shortMa = _prices.TakeLast(_short).Average();
             var longMa = _prices.Average();
 
-            if (!_positionOpen && shortMa > longMa)
+            if (!_positionOpen && shortMa < longMa)
             {
                 await _exchange.PlaceOrderAsync(new Order { Symbol = "BTCUSD", Side = OrderSide.Buy, Price = price, Quantity = 0.001m }, ct);
+                _portfolioTracker.RecordTrade(price, "Buy");
                 _positionOpen = true;
             }
-            else if (_positionOpen && shortMa < longMa)
+            else if (_positionOpen && shortMa > longMa)
             {
                 await _exchange.PlaceOrderAsync(new Order { Symbol = "BTCUSD", Side = OrderSide.Sell, Price = price, Quantity = 0.001m }, ct);
+                _portfolioTracker.RecordTrade(price, "Sell");
                 _positionOpen = false;
             }
         }

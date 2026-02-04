@@ -8,5 +8,6 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.Extensions.Hosting" Version="8.0.0" />
     <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="8.0.0" />
+    <PackageReference Include="Alpaca.Markets" Version="7.0.0" />
   </ItemGroup>
 </Project>
