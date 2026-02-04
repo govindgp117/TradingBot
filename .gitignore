@@ -1,0 +1,38 @@
+# Visual Studio
+.vs/
+
+# Build outputs
+bin/
+obj/
+
+# User-specific
+*.user
+*.suo
+
+# Rider
+.idea/
+
+# OS files
+Thumbs.db
+Desktop.ini
+
+# NuGet
+*.nupkg
+.packages/
+
+# Logs
+*.log
+
+# Test results
+TestResults/
+
+# JetBrains Rider local history
+.idea/
+
+# dotnet user secrets
+secrets.json
+
+# Visual Studio Code
+.vscode/
+
+.fake
