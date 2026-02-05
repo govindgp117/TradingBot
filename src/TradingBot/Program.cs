@@ -8,7 +8,8 @@ using TradingBot.Strategies;
 var host = Host.CreateDefaultBuilder(args)
     .ConfigureServices((context, services) =>
     {
-        services.AddSingleton<IExchangeAdapter, MockExchangeAdapter>();
+        // Use BinancePaperAdapter for paper trading via Binance testnet (set BINANCE_API_KEY/SECRET)
+        services.AddSingleton<IExchangeAdapter, BinancePaperAdapter>();
         services.AddSingleton<IStrategy, MovingAverageCrossoverStrategy>();
         services.AddSingleton<IPortfolioTracker, PortfolioTracker>();
         services.AddHostedService<TradingHostedService>();
